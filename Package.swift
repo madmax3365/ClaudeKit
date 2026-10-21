@@ -11,22 +11,38 @@ let package = Package(
             name: "ClaudeKit",
             targets: ["ClaudeKit"]
         ),
+        .executable(
+            name: "ClaudeCLI",
+            targets: ["ClaudeCLI"]
+        ),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
+        .executableTarget(name: "ClaudeCLI"),
         .target(
-            name: "ClaudeKit",
-            swiftSettings: [
-                .enableUpcomingFeature("ApproachableConcurrency"),
-            ],
+            name: "ClaudeKit"
+        ),
+        .target(
+            name: "ClaudeCore"
         ),
         .testTarget(
             name: "ClaudeKitTests",
-            dependencies: ["ClaudeKit"],
-            swiftSettings: [
-                .enableUpcomingFeature("ApproachableConcurrency"),
-            ],
+            dependencies: ["ClaudeKit"]
+        ),
+        .testTarget(
+            name: "ClaudeCoreTests",
+            dependencies: ["ClaudeCore"]
         ),
     ]
 )
+
+for target in package.targets {
+    var settings = target.swiftSettings ?? []
+    settings.append(contentsOf: [
+        .defaultIsolation(MainActor.self),
+        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+        .enableUpcomingFeature("InferIsolatedConformances"),
+    ])
+    target.swiftSettings = settings
+}
