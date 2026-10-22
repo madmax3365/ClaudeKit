@@ -16,12 +16,16 @@ let package = Package(
             targets: ["ClaudeCLI"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.1.0")
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
-        .executableTarget(name: "ClaudeCLI"),
+        .executableTarget(name: "ClaudeCLI", dependencies: [.target(name: "ClaudeKit")]),
         .target(
-            name: "ClaudeKit"
+            name: "ClaudeKit",
+            dependencies: [.target(name: "ClaudeCore")]
         ),
         .target(
             name: "ClaudeCore"
@@ -40,7 +44,6 @@ let package = Package(
 for target in package.targets {
     var settings = target.swiftSettings ?? []
     settings.append(contentsOf: [
-        .defaultIsolation(MainActor.self),
         .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
         .enableUpcomingFeature("InferIsolatedConformances"),
     ])
