@@ -28,14 +28,14 @@ public struct ClaudeConfiguration: Sendable, Equatable {
     /// - Parameters:
     ///   - baseURL: The server root. Defaults to ``defaultBaseURL``.
     ///   - apiVersion: The HTTP API version. Defaults to `2026-10-21`.
-    /// - Throws: ``ClaudeConfigurationError/emptyApiVersionString`` when the version
+    /// - Throws: ``ClaudeConfigurationError/emptyAPIVersion`` when the version
     ///   is empty after trimming Foundation's whitespace and newline character set.
     public init(
         baseURL: URL = ClaudeConfiguration.defaultBaseURL,
         apiVersion: String = ClaudeConfiguration.defaultAPIVersion
     ) throws {
-        guard !apiVersion.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            throw ClaudeConfigurationError.emptyApiVersionString
+        guard !apiVersion.isWhitespaceOrEmpty else {
+            throw ClaudeConfigurationError.emptyAPIVersion
         }
         
         self.baseURL = baseURL

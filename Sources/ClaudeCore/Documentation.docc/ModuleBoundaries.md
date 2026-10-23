@@ -71,7 +71,7 @@ The existing production targets now match the intended dependency direction:
 ClaudeCLI -> ClaudeKit -> ClaudeCore
 ```
 
-Core has no higher-level dependencies. Each test target depends on its corresponding library module, and both test targets have source files. ClaudeCoreTests currently contains an empty placeholder test; it does not provide behavioral coverage.
+Core has no higher-level dependencies. Each test target depends on its corresponding library module, and both test targets have source files. ClaudeCoreTests covers configuration and credential providers; ClaudeKitTests still contains only an empty placeholder test.
 
 Xcode successfully built the project, including test targets, during the manifest review. This verifies compilation for the selected Xcode configuration, not test execution, Linux compatibility, or documentation generation.
 

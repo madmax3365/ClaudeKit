@@ -50,7 +50,7 @@ struct ClaudeConfigurationTests {
         arguments: ["", "   ", "\n", "\t", " \n\t "]
     )
     func throwsErrorOnInvalidConfiguration(apiVersion: String) throws {
-        #expect(throws: ClaudeConfigurationError.emptyApiVersionString) {
+        #expect(throws: ClaudeConfigurationError.emptyAPIVersion) {
             _ = try ClaudeConfiguration(apiVersion: apiVersion)
         }
     }
